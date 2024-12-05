@@ -23,7 +23,7 @@ var DefaultClientIPResolver = func(r *http.Request) string {
 	return r.RemoteAddr
 }
 
-func MultiChainEthereumRPC(rpcMap map[int]string, useQueryParams ...string) (goproxy.RunOption, goproxy.RunOption) {
+func MultiChainEthereumRPC(rpcMap map[int]string, useQueryParams ...string) (goproxy.Option, goproxy.Option) {
 	rpcURLMap := make(map[int]*url.URL)
 
 	for chainID, rpcURL := range rpcMap {

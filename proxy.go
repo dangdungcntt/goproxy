@@ -21,7 +21,7 @@ type Server struct {
 	reverseProxy *httputil.ReverseProxy
 }
 
-func NewServer(opt ...RunOption) *Server {
+func NewServer(opt ...Option) *Server {
 	s := &Server{
 		mux:  chi.NewRouter(),
 		port: 3000,

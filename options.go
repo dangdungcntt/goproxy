@@ -7,40 +7,40 @@ import (
 	"net/url"
 )
 
-type RunOption func(server *Server)
+type Option func(s *Server)
 
-func WithTargetURL(targetURL *url.URL) RunOption {
+func WithTargetURL(t *url.URL) Option {
 	return func(s *Server) {
-		s.targetURL = targetURL
+		s.targetURL = t
 	}
 }
 
-func WithRewrite(rewrite RewriteFunc) RunOption {
+func WithRewrite(r RewriteFunc) Option {
 	return func(s *Server) {
-		s.rewrite = rewrite
+		s.rewrite = r
 	}
 }
 
-func WithReverseProxy(reverseProxy *httputil.ReverseProxy) RunOption {
+func WithReverseProxy(proxy *httputil.ReverseProxy) Option {
 	return func(s *Server) {
-		s.reverseProxy = reverseProxy
+		s.reverseProxy = proxy
 	}
 }
 
-func WithPort(port int) RunOption {
+func WithPort(p int) Option {
 	return func(s *Server) {
-		s.port = port
+		s.port = p
 	}
 }
 
-func WithRouter(router func(mux *chi.Mux)) RunOption {
+func WithRouter(r func(mux *chi.Mux)) Option {
 	return func(s *Server) {
-		router(s.mux)
+		r(s.mux)
 	}
 }
 
-func WithCors(corsOpt cors.Options) RunOption {
+func WithCors(o cors.Options) Option {
 	return WithRouter(func(mux *chi.Mux) {
-		mux.Use(cors.New(corsOpt).Handler)
+		mux.Use(cors.New(o).Handler)
 	})
 }
