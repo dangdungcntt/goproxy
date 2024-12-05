@@ -145,7 +145,7 @@ func redirectToRPCError(r *httputil.ProxyRequest, id int, message string) {
 	q.Set("response", buf.String())
 	r.Out.URL.RawQuery = q.Encode()
 	r.Out.ContentLength = 0
-	r.Out.Header.Set("Content-Length", fmt.Sprintf("%d", r.Out.ContentLength))
+	r.Out.Header.Del("Content-Length")
 }
 
 func setXForwardedFor(r *httputil.ProxyRequest) {
