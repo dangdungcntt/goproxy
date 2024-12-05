@@ -1,0 +1,5 @@
+.idea/
+volumes/
+vendor/
+.env
+*.wasm
