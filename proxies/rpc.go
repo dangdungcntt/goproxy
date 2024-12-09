@@ -39,9 +39,12 @@ func MultiChainEthereumRPC(rpcMap map[int]string, useQueryParams ...string) (gop
 		return rpcReq.ChainID, nil
 	}
 	if len(useQueryParams) > 0 && useQueryParams[0] != "" {
-		chainIDResolver = func(r *httputil.ProxyRequest, _ *rpcRequest) (int, error) {
+		chainIDResolver = func(r *httputil.ProxyRequest, rpcReq *rpcRequest) (int, error) {
 			chainID, _ := strconv.ParseInt(r.In.URL.Query().Get(useQueryParams[0]), 10, 64)
-			return int(chainID), nil
+			if chainID > 0 {
+				return int(chainID), nil
+			}
+			return rpcReq.ChainID, nil
 		}
 	}
 
